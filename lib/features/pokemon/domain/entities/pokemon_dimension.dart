@@ -10,6 +10,13 @@ class PokemonDimension extends Equatable {
     @required this.maximum,
   }) : super();
 
+  Map<String, dynamic> toJson() {
+    return {
+      'minimum': minimum,
+      'maximum': maximum,
+    };
+  }
+
   @override
   List<Object> get props => [minimum, maximum];
 }

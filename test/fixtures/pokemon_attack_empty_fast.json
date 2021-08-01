@@ -1,0 +1,20 @@
+{
+    "fast": [],
+    "special": [
+        {
+            "name": "Power Whip",
+            "type": "Grass",
+            "damage": 70
+        },
+        {
+            "name": "Seed Bomb",
+            "type": "Grass",
+            "damage": 40
+        },
+        {
+            "name": "Sludge Bomb",
+            "type": "Poison",
+            "damage": 55
+        }
+    ]
+}

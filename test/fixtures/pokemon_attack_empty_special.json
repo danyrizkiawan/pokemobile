@@ -1,0 +1,15 @@
+{
+    "fast": [
+        {
+            "name": "Tackle",
+            "type": "Normal",
+            "damage": 12
+        },
+        {
+            "name": "Vine Whip",
+            "type": "Grass",
+            "damage": 7
+        }
+    ],
+    "special": []
+}

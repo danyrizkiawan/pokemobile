@@ -31,6 +31,29 @@ class Pokemon extends Equatable {
     this.evolutions,
   }) : super();
 
+  Map<String, dynamic> toJson({bool minimum = false}) {
+    Map<String, dynamic> json = {
+      'id': id,
+      'name': name,
+      'image': image,
+    };
+
+    if (!minimum) {
+      if (weight != null) json['weight'] = weight.toJson();
+      if (height != null) json['height'] = height.toJson();
+      if (classification != null) json['classification'] = classification;
+      if (types != null) json['types'] = types;
+      if (attacks != null) json['attacks'] = attacks.toJson();
+      if (resistant != null) json['resistant'] = resistant;
+      if (weaknesses != null) json['weaknesses'] = weaknesses;
+      if (evolutions != null)
+        json['evolutions'] = List<Map<String, dynamic>>.from(
+            evolutions.map((p) => p.toJson(minimum: true)));
+    }
+
+    return json;
+  }
+
   @override
   List<Object> get props => [id, name, image];
 }

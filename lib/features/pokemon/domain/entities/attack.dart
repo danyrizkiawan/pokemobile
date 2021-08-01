@@ -12,6 +12,14 @@ class Attack extends Equatable {
     @required this.damage,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'type': type,
+      'damage': damage,
+    };
+  }
+
   @override
   List<Object> get props => [name, type, damage];
 }

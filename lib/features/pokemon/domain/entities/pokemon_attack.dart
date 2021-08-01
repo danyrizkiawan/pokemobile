@@ -12,6 +12,14 @@ class PokemonAttack extends Equatable {
     @required this.special,
   }) : super();
 
+  Map<String, dynamic> toJson() {
+    return {
+      'fast': List<Map<String, dynamic>>.from(fast.map((a) => a.toJson())),
+      'special':
+          List<Map<String, dynamic>>.from(special.map((a) => a.toJson())),
+    };
+  }
+
   @override
   List<Object> get props => [fast, special];
 }
