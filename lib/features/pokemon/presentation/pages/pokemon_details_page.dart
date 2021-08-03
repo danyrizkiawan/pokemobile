@@ -57,10 +57,8 @@ class PokemonDetailsPage extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (_) => sl<PokemonDetailBloc>(),
-        child: Container(
-          width: _s.width,
-          height: _s.height,
-          child: Column(
+        child: SizedBox.expand(
+          child: Stack(
             children: [
               //---------- Image and Evolution ----------//
               Container(
@@ -109,24 +107,37 @@ class PokemonDetailsPage extends StatelessWidget {
               ),
 
               //---------- Details ----------//
-              Expanded(
-                child: Container(
-                  width: _s.width,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: new BorderRadius.only(
-                      topLeft: const Radius.circular(20.0),
-                      topRight: const Radius.circular(20.0),
+              SizedBox.expand(
+                child: DraggableScrollableSheet(
+                  initialChildSize: .5,
+                  minChildSize: .5,
+                  maxChildSize: .95,
+                  builder: (
+                    BuildContext context,
+                    ScrollController scrollController,
+                  ) =>
+                      Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.only(
+                        topLeft: const Radius.circular(20.0),
+                        topRight: const Radius.circular(20.0),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.shade500,
+                          blurRadius: 10.0,
+                        )
+                      ],
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 20,
-                    ),
-                    child: Column(
+                    child: ListView(
+                      controller: scrollController,
+                      physics: BouncingScrollPhysics(),
                       children: [
-                        /* Pokemon Name & Elements */
+                        SizedBox(
+                          height: 10,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -188,7 +199,7 @@ class PokemonDetailsPage extends StatelessWidget {
                               return SizedBox();
                             },
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
