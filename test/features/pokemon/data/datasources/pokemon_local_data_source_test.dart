@@ -63,6 +63,7 @@ void main() {
         id: "id",
         name: "Bulbasaur",
         image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
+        types: ["Grass", "Poison"],
       ),
     ];
     test(
@@ -146,11 +147,13 @@ void main() {
           id: "UG9rZW1vbjowMDI=",
           name: "Ivysaur",
           image: "https://img.pokemondb.net/artwork/ivysaur.jpg",
+          types: ["Grass", "Poison"],
         ),
         PokemonModel(
           id: "UG9rZW1vbjowMDM=",
           name: "Venusaur",
           image: "https://img.pokemondb.net/artwork/venusaur.jpg",
+          types: ["Grass", "Poison"],
         ),
       ],
     );

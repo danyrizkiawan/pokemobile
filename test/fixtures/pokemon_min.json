@@ -1,5 +1,9 @@
 {
     "id": "UG9rZW1vbjowMDE=",
     "name": "Bulbasaur",
-    "image": "https://img.pokemondb.net/artwork/bulbasaur.jpg"
+    "image": "https://img.pokemondb.net/artwork/bulbasaur.jpg",
+    "types": [
+        "Grass",
+        "Poison"
+    ]
 }

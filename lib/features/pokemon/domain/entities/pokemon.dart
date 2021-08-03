@@ -6,6 +6,7 @@ import 'pokemon_dimension.dart';
 
 class Pokemon extends Equatable {
   final String id;
+  final String number;
   final String name;
   final String image;
   final PokemonDimension weight;
@@ -21,10 +22,11 @@ class Pokemon extends Equatable {
     @required this.id,
     @required this.name,
     @required this.image,
+    this.number,
     this.weight,
     this.height,
     this.classification,
-    this.types,
+    @required this.types,
     this.attacks,
     this.resistant,
     this.weaknesses,
@@ -36,13 +38,14 @@ class Pokemon extends Equatable {
       'id': id,
       'name': name,
       'image': image,
+      'types': types,
     };
 
     if (!minimum) {
+      if (number != null) json['number'] = number;
       if (weight != null) json['weight'] = weight.toJson();
       if (height != null) json['height'] = height.toJson();
       if (classification != null) json['classification'] = classification;
-      if (types != null) json['types'] = types;
       if (attacks != null) json['attacks'] = attacks.toJson();
       if (resistant != null) json['resistant'] = resistant;
       if (weaknesses != null) json['weaknesses'] = weaknesses;
@@ -55,5 +58,5 @@ class Pokemon extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, name, image];
+  List<Object> get props => [id, name, image, types];
 }

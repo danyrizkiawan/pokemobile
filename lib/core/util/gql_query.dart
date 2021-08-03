@@ -5,6 +5,7 @@ mixin GqlQuery {
         id
         name
         image
+        types
       }
     }
   ''';
@@ -13,6 +14,7 @@ mixin GqlQuery {
     query PokemonDetail(\$id: String!) {
     pokemon(id: \$id) {
       id
+      number
       name
       image
       weight {
@@ -43,6 +45,7 @@ mixin GqlQuery {
         id
         image
         name
+        types
       }
     }
   }

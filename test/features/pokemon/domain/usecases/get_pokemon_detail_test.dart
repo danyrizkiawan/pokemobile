@@ -21,7 +21,8 @@ void main() {
 
   final tPokemonID = "UG9rZW1vbjowMDE=";
   final tPokemonDetail = Pokemon(
-    id: "id",
+    id: "UG9rZW1vbjowMDE=",
+    number: "001",
     name: "Bulbasaur",
     image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
     weight: PokemonDimension(minimum: "6.04kg", maximum: "7.76kg"),
@@ -46,13 +47,17 @@ void main() {
     weaknesses: ["Fire", "Ice", "Flying", "Psychic"],
     evolutions: [
       Pokemon(
-          id: "UG9rZW1vbjowMDI=",
-          name: "Ivysaur",
-          image: "https://img.pokemondb.net/artwork/ivysaur.jpg"),
+        id: "UG9rZW1vbjowMDI=",
+        name: "Ivysaur",
+        image: "https://img.pokemondb.net/artwork/ivysaur.jpg",
+        types: ["Grass", "Poison"],
+      ),
       Pokemon(
-          id: "UG9rZW1vbjowMDM=",
-          name: "Venusaur",
-          image: "https://img.pokemondb.net/artwork/venusaur.jpg"),
+        id: "UG9rZW1vbjowMDM=",
+        name: "Venusaur",
+        image: "https://img.pokemondb.net/artwork/venusaur.jpg",
+        types: ["Grass", "Poison"],
+      ),
     ],
   );
   test('should get pokemon detail from repository', () async {

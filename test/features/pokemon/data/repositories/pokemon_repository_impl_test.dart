@@ -62,6 +62,7 @@ void main() {
         id: "id",
         name: "Bulbasaur",
         image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
+        types: ["Grass", "Poison"],
       ),
     ];
 
@@ -153,6 +154,7 @@ void main() {
     final tPokemonID = "UG9rZW1vbjowMDE=";
     final tPokemonDetail = PokemonModel(
       id: "id",
+      number: "001",
       name: "Bulbasaur",
       image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
       weight: PokemonDimensionModel(minimum: "6.04kg", maximum: "7.76kg"),
@@ -177,13 +179,17 @@ void main() {
       weaknesses: ["Fire", "Ice", "Flying", "Psychic"],
       evolutions: [
         PokemonModel(
-            id: "UG9rZW1vbjowMDI=",
-            name: "Ivysaur",
-            image: "https://img.pokemondb.net/artwork/ivysaur.jpg"),
+          id: "UG9rZW1vbjowMDI=",
+          name: "Ivysaur",
+          image: "https://img.pokemondb.net/artwork/ivysaur.jpg",
+          types: ["Grass", "Poison"],
+        ),
         PokemonModel(
-            id: "UG9rZW1vbjowMDM=",
-            name: "Venusaur",
-            image: "https://img.pokemondb.net/artwork/venusaur.jpg"),
+          id: "UG9rZW1vbjowMDM=",
+          name: "Venusaur",
+          image: "https://img.pokemondb.net/artwork/venusaur.jpg",
+          types: ["Grass", "Poison"],
+        ),
       ],
     );
 

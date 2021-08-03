@@ -25,39 +25,48 @@ class PokemonDetailsPage extends StatelessWidget {
     double _r = _s.height / _s.width;
     double _threshold = 1.8;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    return BlocProvider(
+      create: (_) => sl<PokemonDetailBloc>(),
+      child: Scaffold(
         backgroundColor: Colors.white,
-        elevation: 0.0,
-        iconTheme: IconThemeData(
-          color: pokemon.types == null
-              ? Theme.of(context).cardColor
-              : Mapper.pokemonMainElementColor(
-                  pokemon.types?.first ?? 'normal',
-                ), //change your color here
-        ),
-        actions: [
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(right: 16),
-            child: Text(
-              '#001',
-              style: TextStyle(
-                color: pokemon.types == null
-                    ? Theme.of(context).cardColor
-                    : Mapper.pokemonMainElementColor(
-                        pokemon.types?.first ?? 'normal',
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          iconTheme: IconThemeData(
+            color: pokemon.types == null
+                ? Theme.of(context).cardColor
+                : Mapper.pokemonMainElementColor(
+                    pokemon.types?.first ?? 'normal',
+                  ), //change your color here
+          ),
+          actions: [
+            BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+              builder: (context, state) {
+                if (state is PokemonDetailLoaded) {
+                  return Container(
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 16),
+                    child: Text(
+                      state.pokemon.number == null
+                          ? ''
+                          : '#${state.pokemon.number}',
+                      style: TextStyle(
+                        color: state.pokemon.types == null
+                            ? Theme.of(context).cardColor
+                            : Mapper.pokemonMainElementColor(
+                                state.pokemon.types?.first ?? 'normal',
+                              ),
+                        fontWeight: FontWeight.bold,
                       ),
-                fontWeight: FontWeight.bold,
-              ),
+                    ),
+                  );
+                }
+                return SizedBox();
+              },
             ),
-          )
-        ],
-      ),
-      body: BlocProvider(
-        create: (_) => sl<PokemonDetailBloc>(),
-        child: SizedBox.expand(
+          ],
+        ),
+        body: SizedBox.expand(
           child: Stack(
             children: [
               //---------- Image and Evolution ----------//
@@ -183,22 +192,19 @@ class PokemonDetailsPage extends StatelessWidget {
                         ),
 
                         /* Main Scrollview */
-                        Expanded(
-                          child: BlocBuilder<PokemonDetailBloc,
-                              PokemonDetailState>(
-                            builder: (context, state) {
-                              if (state is PokemonDetailInitial) {
-                                return LoadingDisplay();
-                              } else if (state is PokemonListLoading) {
-                                return LoadingDisplay();
-                              } else if (state is PokemonDetailLoaded) {
-                                return DetailListView(pokemon: state.pokemon);
-                              } else if (state is PokemonDetailError) {
-                                return MessageDisplay(message: state.message);
-                              }
-                              return SizedBox();
-                            },
-                          ),
+                        BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+                          builder: (context, state) {
+                            if (state is PokemonDetailInitial) {
+                              return LoadingDisplay();
+                            } else if (state is PokemonListLoading) {
+                              return LoadingDisplay();
+                            } else if (state is PokemonDetailLoaded) {
+                              return DetailListView(pokemon: state.pokemon);
+                            } else if (state is PokemonDetailError) {
+                              return MessageDisplay(message: state.message);
+                            }
+                            return SizedBox();
+                          },
                         ),
                       ],
                     ),

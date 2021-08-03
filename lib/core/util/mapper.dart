@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokemobile/core/icons/pokemon_element_icon_icons.dart';
 
 import '../../features/pokemon/domain/entities/attack.dart';
 import '../../features/pokemon/presentation/widgets/element_detail_chip.dart';
+import '../icons/pokemon_element_icon_icons.dart';
 
 class Mapper {
   static Color pokemonMainElementColor(String element) {

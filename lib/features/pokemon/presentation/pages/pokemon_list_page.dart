@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pagination_view/pagination_view.dart';
-import 'package:pokemobile/core/icons/pokedex_ui_icon_icons.dart';
 
+import '../../../../core/icons/pokedex_ui_icon_icons.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/pokemon.dart';
 import '../bloc/pokemon_list_bloc.dart';

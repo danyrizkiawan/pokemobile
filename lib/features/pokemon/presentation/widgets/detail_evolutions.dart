@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pokemobile/features/pokemon/domain/entities/pokemon.dart';
-import 'package:pokemobile/features/pokemon/presentation/pages/pokemon_details_page.dart';
+
+import '../../domain/entities/pokemon.dart';
+import '../pages/pokemon_details_page.dart';
 
 class EvolutionsWidget extends StatelessWidget {
   const EvolutionsWidget({

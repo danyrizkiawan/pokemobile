@@ -14,10 +14,12 @@ void main() {
     id: "UG9rZW1vbjowMDE=",
     name: "Bulbasaur",
     image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
+    types: ["Grass", "Poison"],
   );
 
   final tPokemonModel = PokemonModel(
     id: "UG9rZW1vbjowMDE=",
+    number: "001",
     name: "Bulbasaur",
     image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
     weight: PokemonDimensionModel(minimum: "6.04kg", maximum: "7.76kg"),
@@ -45,11 +47,13 @@ void main() {
         id: "UG9rZW1vbjowMDI=",
         name: "Ivysaur",
         image: "https://img.pokemondb.net/artwork/ivysaur.jpg",
+        types: ["Grass", "Poison"],
       ),
       PokemonModel(
         id: "UG9rZW1vbjowMDM=",
         name: "Venusaur",
         image: "https://img.pokemondb.net/artwork/venusaur.jpg",
+        types: ["Grass", "Poison"],
       ),
     ],
   );
@@ -115,6 +119,7 @@ void main() {
       // assert
       final expectedMap = {
         "id": "UG9rZW1vbjowMDE=",
+        "number": "001",
         "name": "Bulbasaur",
         "image": "https://img.pokemondb.net/artwork/bulbasaur.jpg",
         "weight": {"minimum": "6.04kg", "maximum": "7.76kg"},
@@ -138,12 +143,14 @@ void main() {
           {
             "id": "UG9rZW1vbjowMDI=",
             "image": "https://img.pokemondb.net/artwork/ivysaur.jpg",
-            "name": "Ivysaur"
+            "name": "Ivysaur",
+            "types": ["Grass", "Poison"],
           },
           {
             "id": "UG9rZW1vbjowMDM=",
             "image": "https://img.pokemondb.net/artwork/venusaur.jpg",
-            "name": "Venusaur"
+            "name": "Venusaur",
+            "types": ["Grass", "Poison"],
           }
         ]
       };
@@ -158,6 +165,7 @@ void main() {
         "id": "UG9rZW1vbjowMDE=",
         "name": "Bulbasaur",
         "image": "https://img.pokemondb.net/artwork/bulbasaur.jpg",
+        "types": ["Grass", "Poison"],
       };
       expect(result, expectedMap);
     });

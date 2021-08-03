@@ -19,9 +19,10 @@ void main() {
   final tFirst = 1;
   final tPokemonList = [
     Pokemon(
-      id: "id",
+      id: "UG9rZW1vbjowMDE=",
       name: "Bulbasaur",
       image: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
+      types: ["Grass", "Poison"],
     ),
   ];
   test('should get pokemon list from repository', () async {

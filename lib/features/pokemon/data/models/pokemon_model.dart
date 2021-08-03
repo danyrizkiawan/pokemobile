@@ -9,16 +9,18 @@ class PokemonModel extends Pokemon {
     @required String id,
     @required String name,
     @required String image,
+    String number,
     PokemonDimensionModel weight,
     PokemonDimensionModel height,
     String classification,
-    List<String> types,
+    @required List<String> types,
     PokemonAttackModel attacks,
     List<String> resistant,
     List<String> weaknesses,
     List<Pokemon> evolutions,
   }) : super(
           id: id,
+          number: number,
           name: name,
           image: image,
           weight: weight,
@@ -34,6 +36,7 @@ class PokemonModel extends Pokemon {
   factory PokemonModel.fromJson(Map<String, dynamic> json) {
     return PokemonModel(
       id: json['id'],
+      number: json['number'] != null ? json['number'] : null,
       name: json['name'],
       image: json['image'],
       weight: json['weight'] != null
@@ -43,7 +46,7 @@ class PokemonModel extends Pokemon {
           ? PokemonDimensionModel.fromJson(json['height'])
           : null,
       classification: json['classification'] ?? null,
-      types: json['types'] != null ? List<String>.from(json['types']) : null,
+      types: List<String>.from(json['types']),
       attacks: json['attacks'] != null
           ? PokemonAttackModel.fromJson(json['attacks'])
           : null,
