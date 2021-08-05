@@ -1,17 +1,11 @@
-
 import 'package:flutter/material.dart';
 
-class ElementFilterChip extends StatelessWidget {
-  const ElementFilterChip({
-    Key key,
-    @required this.color,
-    @required this.icon,
-    @required this.title,
-  }) : super(key: key);
+import '../../domain/entities/pokemon_element.dart';
 
-  final Color color;
-  final IconData icon;
-  final String title;
+class ElementFilterChip extends StatelessWidget {
+  const ElementFilterChip({Key key, @required this.element}) : super(key: key);
+
+  final PokemonElement element;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +17,7 @@ class ElementFilterChip extends StatelessWidget {
         bottom: 6,
       ),
       decoration: BoxDecoration(
-        color: color,
+        color: element.color,
         borderRadius: const BorderRadius.all(
           Radius.circular(100),
         ),
@@ -31,12 +25,15 @@ class ElementFilterChip extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            icon,
+            element.icon,
             size: 16,
             color: Colors.white,
           ),
+          SizedBox(
+            width: 4,
+          ),
           Text(
-            title,
+            element.name,
             style: TextStyle(
               color: Colors.white,
             ),

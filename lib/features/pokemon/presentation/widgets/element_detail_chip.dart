@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ElementDetailChip extends StatelessWidget {
-  const ElementDetailChip({
-    Key key,
-    @required this.color,
-    @required this.icon,
-    @required this.title,
-  }) : super(key: key);
+import '../../domain/entities/pokemon_element.dart';
 
-  final Color color;
-  final IconData icon;
-  final String title;
+class ElementDetailChip extends StatelessWidget {
+  const ElementDetailChip({Key key, @required this.element}) : super(key: key);
+
+  final PokemonElement element;
 
   @override
   Widget build(BuildContext context) {
     return Chip(
-      backgroundColor: color,
+      backgroundColor: element.color,
       labelPadding: EdgeInsets.only(right: 6),
       label: Text(
-        title,
+        element.name,
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
@@ -26,7 +21,7 @@ class ElementDetailChip extends StatelessWidget {
         ),
       ),
       avatar: Icon(
-        icon,
+        element.icon,
         size: 14,
         color: Colors.white,
       ),

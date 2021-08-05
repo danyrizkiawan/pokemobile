@@ -12,8 +12,10 @@ import '../../domain/usecases/get_pokemon_detail.dart';
 part 'pokemon_detail_event.dart';
 part 'pokemon_detail_state.dart';
 
-const String SERVER_FAILURE_MESSAGE = 'Server Failure';
-const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
+const String SERVER_FAILURE_MESSAGE =
+    'Failed to fetch data from server. Please try again later.';
+const String CACHE_FAILURE_MESSAGE =
+    'No internet connection. Please turn on your Mobile Data or WiFi.';
 
 class PokemonDetailBloc extends Bloc<PokemonDetailEvent, PokemonDetailState> {
   PokemonDetailBloc({@required GetPokemonDetail pokemonDetail})

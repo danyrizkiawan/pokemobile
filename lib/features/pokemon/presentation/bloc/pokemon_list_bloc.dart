@@ -12,9 +12,6 @@ import '../../domain/usecases/get_pokemon_list.dart';
 part 'pokemon_list_event.dart';
 part 'pokemon_list_state.dart';
 
-const String SERVER_FAILURE_MESSAGE = 'Server Failure';
-const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
-
 class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   PokemonListBloc({@required GetPokemonList pokemonList})
       : assert(pokemonList != null),
@@ -27,29 +24,10 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
   Stream<PokemonListState> mapEventToState(
     PokemonListEvent event,
   ) async* {
-    if (event is GetPokemons) {
-      yield PokemonListLoading();
-      final pokemons = await _getPokemonList(
-        Params(first: event.first),
-      );
-      yield pokemons.fold(
-        (failure) => PokemonListError(
-          message: _mapFailureToMessage(failure),
-        ),
-        (data) => PokemonListLoaded(pokemons: data),
-      );
-    }
-  }
-
-  String _mapFailureToMessage(Failure failure) {
-    // Instead of a regular 'if (failure is ServerFailure)...'
-    switch (failure.runtimeType) {
-      case ServerFailure:
-        return SERVER_FAILURE_MESSAGE;
-      case CacheFailure:
-        return CACHE_FAILURE_MESSAGE;
-      default:
-        return 'Unexpected Error';
+    if (event is FilterPokemons) {
+      yield PokemonListFiltered();
+    } else {
+      yield PokemonListNormal();
     }
   }
 
@@ -59,6 +37,46 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
     return either.fold(
       (l) => throw _getFailureAndThrowExpection(l),
       (r) => r.length < offset ? [] : r.getRange(offset - 10, offset).toList(),
+    );
+  }
+
+  Future<List<Pokemon>> getFilteredPokemonsInPage(
+    int offset,
+    List<String> filtered, {
+    int currentItemLength,
+  }) async {
+    int newOffset = offset + 20;
+    if (currentItemLength == null) {
+      currentItemLength = offset;
+    }
+    final either = await _getPokemonList(Params(first: newOffset));
+    return either.fold(
+      (l) => throw _getFailureAndThrowExpection(l),
+      (r) {
+        List<Pokemon> filteredList = [];
+        r.forEach((pokemon) {
+          pokemon.types.forEach((element) {
+            if (filtered.contains(element)) {
+              filteredList.add(pokemon);
+              return;
+            }
+          });
+        });
+        if (offset > r.length) {
+          return filteredList
+              .getRange(currentItemLength <= 0 ? 0 : currentItemLength,
+                  filteredList.length)
+              .toList();
+        }
+        // print(
+        //     "response: ${r.length} - offset: $offset - current $currentItemLength - filter: ${filteredList.length}");
+        return filteredList.length - currentItemLength < 10
+            ? getFilteredPokemonsInPage(newOffset, filtered,
+                currentItemLength: currentItemLength)
+            : filteredList
+                .getRange(currentItemLength, currentItemLength + 10)
+                .toList();
+      },
     );
   }
 

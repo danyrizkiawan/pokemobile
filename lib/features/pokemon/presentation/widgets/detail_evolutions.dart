@@ -83,8 +83,7 @@ class EvolutionCard extends StatelessWidget {
         },
         child: Image.network(
           pokemon.image,
-          cacheHeight: 100,
-          cacheWidth: 100,
+          fit: BoxFit.contain,
           errorBuilder: (context, object, _) =>
               Image.asset('assets/images/no_image.png'),
         ),

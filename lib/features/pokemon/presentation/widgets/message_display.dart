@@ -10,6 +10,11 @@ class MessageDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text(message));
+    return Container(
+      margin: EdgeInsets.only(top: 10.0),
+      child: Text(
+        message,
+      ),
+    );
   }
 }

@@ -31,7 +31,7 @@ class PokemonCard extends StatelessWidget {
           border: Border.all(
             color: pokemon.types == null
                 ? Theme.of(context).cardColor
-                : Mapper.pokemonMainElementColor(
+                : Mapper.getPokemonElementColor(
                     pokemon.types?.first ?? 'normal',
                   ),
             width: 2.0,
@@ -53,15 +53,16 @@ class PokemonCard extends StatelessWidget {
               height: 32,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: pokemon.types == null
-                      ? Theme.of(context).cardColor
-                      : Mapper.pokemonMainElementColor(
-                          pokemon.types?.first ?? 'normal',
-                        ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  )),
+                color: pokemon.types == null
+                    ? Theme.of(context).cardColor
+                    : Mapper.getPokemonElementColor(
+                        pokemon.types?.first ?? 'normal',
+                      ),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
+                ),
+              ),
               child: Text(
                 pokemon.name,
                 style: TextStyle(

@@ -5,9 +5,9 @@ import '../../../../core/util/mapper.dart';
 import '../../../../injection_container.dart';
 import '../../data/models/pokemon_model.dart';
 import '../bloc/pokemon_detail_bloc.dart';
-import '../bloc/pokemon_list_bloc.dart';
 import '../widgets/detail_evolutions.dart';
 import '../widgets/detail_list_view.dart';
+import '../widgets/element_detail_chip.dart';
 import '../widgets/loading_display.dart';
 import '../widgets/message_display.dart';
 
@@ -27,151 +27,126 @@ class PokemonDetailsPage extends StatelessWidget {
 
     return BlocProvider(
       create: (_) => sl<PokemonDetailBloc>(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+      child: OrientationBuilder(builder: (context, orientation) {
+        return Scaffold(
           backgroundColor: Colors.white,
-          elevation: 0.0,
-          iconTheme: IconThemeData(
-            color: pokemon.types == null
-                ? Theme.of(context).cardColor
-                : Mapper.pokemonMainElementColor(
-                    pokemon.types?.first ?? 'normal',
-                  ), //change your color here
-          ),
-          actions: [
-            BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
-              builder: (context, state) {
-                if (state is PokemonDetailLoaded) {
-                  return Container(
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 16),
-                    child: Text(
-                      state.pokemon.number == null
-                          ? ''
-                          : '#${state.pokemon.number}',
-                      style: TextStyle(
-                        color: state.pokemon.types == null
-                            ? Theme.of(context).cardColor
-                            : Mapper.pokemonMainElementColor(
-                                state.pokemon.types?.first ?? 'normal',
-                              ),
-                        fontWeight: FontWeight.bold,
-                      ),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            iconTheme: IconThemeData(
+              color: pokemon.types == null
+                  ? Theme.of(context).cardColor
+                  : Mapper.getPokemonElementColor(
+                      pokemon.types?.first ?? 'normal',
                     ),
-                  );
-                }
-                return SizedBox();
-              },
             ),
-          ],
-        ),
-        body: SizedBox.expand(
-          child: Stack(
-            children: [
-              //---------- Image and Evolution ----------//
-              Container(
-                width: _s.width,
-                height: _r > _threshold ? _s.height * 0.4 : _s.height * 0.35,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Column(
-                  children: [
-                    /* Image */
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 48),
-                        child: Image.network(
-                          pokemon.image,
-                          fit: BoxFit.contain,
-                          cacheHeight: 200,
-                          cacheWidth: 200,
-                          errorBuilder: (context, object, _) => Image.asset(
-                            'assets/images/no_image.png',
-                            fit: BoxFit.contain,
-                          ),
+            actions: [
+              BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+                builder: (context, state) {
+                  if (state is PokemonDetailLoaded) {
+                    return Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.only(right: 16),
+                      child: Text(
+                        state.pokemon.number == null
+                            ? ''
+                            : '#${state.pokemon.number}',
+                        style: TextStyle(
+                          color: state.pokemon.types == null
+                              ? Theme.of(context).cardColor
+                              : Mapper.getPokemonElementColor(
+                                  pokemon.types?.first ?? 'normal',
+                                ),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-
-                    /* Evolution */
-                    BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
-                      builder: (context, state) {
-                        if (state is PokemonDetailInitial) {
-                          context
-                              .read<PokemonDetailBloc>()
-                              .add(GetPokemon(id: pokemon.id));
-                        } else if (state is PokemonDetailLoaded) {
-                          return EvolutionsWidget(
-                            evolutions: state.pokemon.evolutions,
-                          );
-                        }
-                        return SizedBox();
-                      },
-                    ),
-                  ],
-                ),
+                    );
+                  }
+                  return SizedBox();
+                },
               ),
-
-              //---------- Details ----------//
-              SizedBox.expand(
-                child: DraggableScrollableSheet(
-                  initialChildSize: .5,
-                  minChildSize: .5,
-                  maxChildSize: .95,
-                  builder: (
-                    BuildContext context,
-                    ScrollController scrollController,
-                  ) =>
-                      Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(20.0),
-                        topRight: const Radius.circular(20.0),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade500,
-                          blurRadius: 10.0,
-                        )
-                      ],
-                    ),
-                    child: ListView(
-                      controller: scrollController,
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ],
+          ),
+          body: SizedBox.expand(
+            child: Stack(
+              children: [
+                //---------- Image and Evolution ----------//
+                Container(
+                  width: _s.width,
+                  height: _r > _threshold ? _s.height * 0.4 : _s.height * 0.35,
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: orientation == Orientation.portrait
+                      ? Column(
                           children: [
-                            Text(
-                              pokemon.name,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w800,
+                            /* Image */
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 48),
+                                child: Image.network(
+                                  pokemon.image,
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (context, object, _) =>
+                                      Image.asset(
+                                    'assets/images/no_image.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             ),
+                            SizedBox(
+                              height: 8,
+                            ),
+
+                            /* Evolution */
                             BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
                               builder: (context, state) {
-                                if (state is PokemonDetailLoaded) {
-                                  if (state.pokemon.types == null) {
-                                    return SizedBox();
-                                  }
-                                  return Row(
-                                    children: state.pokemon.types
-                                        .map((String element) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(left: 8),
-                                        child:
-                                            Mapper.elementsChipCreator(element),
-                                      );
-                                    }).toList(),
+                                if (state is PokemonDetailInitial) {
+                                  context
+                                      .read<PokemonDetailBloc>()
+                                      .add(GetPokemon(id: pokemon.id));
+                                } else if (state is PokemonDetailLoaded) {
+                                  return EvolutionsWidget(
+                                    evolutions: state.pokemon.evolutions,
+                                  );
+                                }
+                                return SizedBox();
+                              },
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            /* Image */
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 48),
+                                child: Image.network(
+                                  pokemon.image,
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (context, object, _) =>
+                                      Image.asset(
+                                    'assets/images/no_image.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+
+                            /* Evolution */
+                            BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+                              builder: (context, state) {
+                                if (state is PokemonDetailInitial) {
+                                  context
+                                      .read<PokemonDetailBloc>()
+                                      .add(GetPokemon(id: pokemon.id));
+                                } else if (state is PokemonDetailLoaded) {
+                                  return EvolutionsWidget(
+                                    evolutions: state.pokemon.evolutions,
                                   );
                                 }
                                 return SizedBox();
@@ -179,42 +154,114 @@ class PokemonDetailsPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 12,
-                        ),
+                ),
 
-                        /* Divider */
+                //---------- Details ----------//
+                SizedBox.expand(
+                  child: DraggableScrollableSheet(
+                    initialChildSize: .5,
+                    minChildSize: .5,
+                    maxChildSize: .95,
+                    builder: (
+                      BuildContext context,
+                      ScrollController scrollController,
+                    ) =>
                         Container(
-                          height: 1.0,
-                          width: _s.width,
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.1),
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(20.0),
+                          topRight: const Radius.circular(20.0),
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade500,
+                            blurRadius: 10.0,
+                          )
+                        ],
+                      ),
+                      child: ListView(
+                        controller: scrollController,
+                        physics: BouncingScrollPhysics(),
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                pokemon.name,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              BlocBuilder<PokemonDetailBloc,
+                                  PokemonDetailState>(
+                                builder: (context, state) {
+                                  if (state is PokemonDetailLoaded) {
+                                    if (state.pokemon.types == null) {
+                                      return SizedBox();
+                                    }
+                                    return Row(
+                                      children: state.pokemon.types
+                                          .map((String element) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(left: 8),
+                                          child: ElementDetailChip(
+                                            element: Mapper.getPokemonElement(
+                                                element),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    );
+                                  }
+                                  return SizedBox();
+                                },
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
 
-                        /* Main Scrollview */
-                        BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
-                          builder: (context, state) {
-                            if (state is PokemonDetailInitial) {
-                              return LoadingDisplay();
-                            } else if (state is PokemonListLoading) {
-                              return LoadingDisplay();
-                            } else if (state is PokemonDetailLoaded) {
-                              return DetailListView(pokemon: state.pokemon);
-                            } else if (state is PokemonDetailError) {
-                              return MessageDisplay(message: state.message);
-                            }
-                            return SizedBox();
-                          },
-                        ),
-                      ],
+                          /* Divider */
+                          Container(
+                            height: 1.0,
+                            width: _s.width,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.1),
+                          ),
+
+                          /* Main Scrollview */
+                          BlocBuilder<PokemonDetailBloc, PokemonDetailState>(
+                            builder: (context, state) {
+                              if (state is PokemonDetailInitial) {
+                                return LoadingDisplay();
+                              } else if (state is PokemonDetailLoading) {
+                                return LoadingDisplay();
+                              } else if (state is PokemonDetailLoaded) {
+                                return DetailListView(pokemon: state.pokemon);
+                              } else if (state is PokemonDetailError) {
+                                return MessageDisplay(
+                                  message: state.message,
+                                );
+                              }
+                              return SizedBox();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

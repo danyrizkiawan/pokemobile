@@ -5,6 +5,7 @@ import '../../../../core/util/mapper.dart';
 import '../../domain/entities/pokemon.dart';
 import 'detail_about.dart';
 import 'detail_subtitle.dart';
+import 'element_detail_chip.dart';
 
 class DetailListView extends StatelessWidget {
   const DetailListView({
@@ -121,7 +122,9 @@ class DetailListView extends StatelessWidget {
             : Wrap(
                 spacing: 6,
                 children: pokemon.resistant.map((String element) {
-                  return Mapper.elementsChipCreator(element);
+                  return ElementDetailChip(
+                    element: Mapper.getPokemonElement(element),
+                  );
                 }).toList(),
               ),
         SizedBox(height: 20),
@@ -135,7 +138,9 @@ class DetailListView extends StatelessWidget {
             : Wrap(
                 spacing: 6,
                 children: pokemon.weaknesses.map((String element) {
-                  return Mapper.elementsChipCreator(element);
+                  return ElementDetailChip(
+                    element: Mapper.getPokemonElement(element),
+                  );
                 }).toList(),
               ),
         SizedBox(height: 20),
